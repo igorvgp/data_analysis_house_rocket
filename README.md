@@ -88,12 +88,12 @@ The main insights found were:
 
 **1. Properties with waterview are more expensive.**
 On the map, you can see that most of the properties owith waterview are labeled with black dots, it means that they are more expensive.
-<img src="img/price_houses.png" width="500">
+<img src="img/price_houses.png" width="1000">
 
 
 **2. Older or very new houses are highly valued.**
 In the plot below we can see that the very old houses, and the newer ones are the most expensive.
-<img src="img/price_houses.png" width="500">
+<img src="img/price_by_yrbuilt.png" width="1000">
 
 
 ## **4. Resultados (ROI - Return on Investment)**
