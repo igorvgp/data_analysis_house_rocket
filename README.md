@@ -91,9 +91,14 @@ On the map, you can see that most of the properties owith waterview are labeled 
 <img src="img/price_houses.png" width="1000">
 
 
-**2. Older or very new houses are highly valued.**
-In the plot below we can see that the very old houses, and the newer ones are the most expensive.
-<img src="img/price_by_yrbuilt.png" width="1000">
+**2. Properties built in the 1930s have a higher proportion of renovations.**
+In the plot below we can see that Properties built between 1940 and 1980 are cheaper.
+<img src="img/price_by_yrbuilt.png" width="600">
+
+**3. Properties built between 1940 and 1980 are 15% cheaper.**
+About 16% of the properties built at that time were renovated at some point.
+**Renovation rate over the dacades**
+<img src="img/renovation_rate.png" width="600">
 
 
 ## **4. Resultados (ROI - Return on Investment)**
