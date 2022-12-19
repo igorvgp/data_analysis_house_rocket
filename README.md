@@ -99,25 +99,18 @@ In the plot below we can see that Properties built between 1940 and 1980 are che
 About 16% of the properties built at that time were renovated at some point.
 
 
-      **Renovation rate over the dacades**
+**Renovation rate over the dacades**
 <img src="img/renovation_rate.png" width="600">
 
 
-## **4. Resultados (ROI - Return on Investment)**
+## **5. Conclusion**
 
-![Imóveis construidos na década de 30 tem uma proporção maior de reformas](img/p4.jpg "Imóveis construidos na década de 30 tem uma proporção maior de reformas")
+Data analysis brought important insights to the business, and the solutions delivered comply with the CEO's request.
+With a dashboard containing the main business metrics and a map containing detailed information for each property, steakholders will be able to perform online analysis, increasing agility and accuracy in decision-making.
 
-Caso todos os imóveis que foram comprados, assim como sugerido, sejam vendidos posteriormente, a House Rocket terá um lucro estimado de **$ 51 milhões**
+## **6. Next Steps**
 
-## **5. Conclusão**
+As next steps, we suggest:
 
-A análise dos dados trouxeram informações valiosas para que a área responsável possa tomar a decisão de qual imóvel comprar e qual venda.
-
-Mais do que apenas indicar os imóveis, conseguimos modelar uma lógica de precificação baseado na densidade de anúncios por região e pela sazonalidade para a venda
-
-## **6. Próximos Passos**
-
-Como próximos passos, sugerimos:
-
-* Aprofundar a lógica de precificação adicionando mais registros (inclusive de outros peíodos que não apenas 2014 e 2015)
-* Treinar modleos de ML para estimar valores de compra e venda com base em certas características
+* Create metrics that identify opportunities for buying and selling real estate.
+* Train ML models to estimate buy and sell values based on certain characteristics.
