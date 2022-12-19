@@ -97,6 +97,8 @@ In the plot below we can see that Properties built between 1940 and 1980 are che
 
 **3. Properties built between 1940 and 1980 are 15% cheaper.**
 About 16% of the properties built at that time were renovated at some point.
+
+
 **Renovation rate over the dacades**
 <img src="img/renovation_rate.png" width="600">
 
