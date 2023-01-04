@@ -5,6 +5,7 @@ import numpy     as np
 import folium
 
 from datetime import datetime, time
+from PIL import Image
 
 from streamlit_folium import folium_static
 from folium.plugins   import MarkerCluster
@@ -17,6 +18,8 @@ import plotly.express as px
 # ------------------------------------------
 st.set_page_config( layout='wide' )
 
+image1 = Image.open('app/img/rocket-house-logo.png')
+image2 = Image.open('app/img/rocket-house-top-logo.png')
 
 # ------------------------------------------
 # Helper Functions
@@ -39,6 +42,69 @@ def set_attributes( data ):
     data['price_m2'] = data['price'] / data['sqft_lot'] 
 
     return data
+
+def heading():
+    st.sidebar.image(image1)
+    st.image(image2)
+    st.markdown('''---''')
+    return None
+
+def region_overview( data, geofile ):
+    st.title( 'Region Overview' )
+
+    st.header( 'Portfolio Density' )
+
+    df = data.sample( 500 )
+
+    # Base Map - Folium 
+    density_map = folium.Map( location=[data['lat'].mean(), data['long'].mean() ],
+                              width = 1200, height = 500, default_zoom_start=15 ) 
+
+    marker_cluster = MarkerCluster().add_to( density_map )
+    for name, row in df.iterrows():
+        folium.Marker( [row['lat'], row['long'] ], 
+            popup='Sold R${0} on: {1}. Features: {2} sqft, {3} bedrooms, {4} bathrooms, year built: {5}'.format( row['price'], 
+                           row['date'], 
+                           row['sqft_living'],
+                           row['bedrooms'],
+                           row['bathrooms'],
+                           row['yr_built'] ) ).add_to( marker_cluster )
+
+
+
+    folium_static( density_map, 1200, 500 )
+
+
+    # Region Price Map
+    st.header( 'Price Density' )
+
+    df = data[['price', 'zipcode']].groupby( 'zipcode' ).mean().reset_index()
+    df.columns = ['ZIP', 'PRICE']
+
+    geofile = geofile[geofile['ZIP'].isin( df['ZIP'].tolist() )]
+
+    region_price_map = folium.Map( location=[data['lat'].mean(), 
+                                   data['long'].mean() ],
+                                   width = 1200,
+                                   height = 500,
+                                   default_zoom_start=15 ) 
+
+
+    region_price_map.choropleth( data = df,
+                                 geo_data = geofile,
+                                 columns=['ZIP', 'PRICE'],
+                                 key_on='feature.properties.ZIP',
+                                 fill_color='YlOrRd',
+                                 fill_opacity = 0.7,
+                                 line_opacity = 0.2,
+                                 legend_name='AVG PRICE' )
+
+
+    folium_static( region_price_map, 1200, 500 )
+
+    st.markdown('''---''')
+    return None
+
 
 
 def data_overview( data ):
@@ -113,63 +179,11 @@ def data_overview( data ):
     c2.header('Descriptive Analysis')
     c2.dataframe(df_stats, width = 10000, height = 600)
 
+    st.markdown('''---''')
+    st.sidebar.markdown('''---''')
     return None
 
 
-def region_overview( data, geofile ):
-    st.title( 'Region Overview' )
-
-    c1, c2 = st.columns( ( 1, 1 ) )
-    c1.header( 'Portfolio Density' )
-
-    df = data.sample( 500 )
-
-    # Base Map - Folium 
-    density_map = folium.Map( location=[data['lat'].mean(), data['long'].mean() ],
-                              default_zoom_start=15 ) 
-
-    marker_cluster = MarkerCluster().add_to( density_map )
-    for name, row in df.iterrows():
-        folium.Marker( [row['lat'], row['long'] ], 
-            popup='Sold R${0} on: {1}. Features: {2} sqft, {3} bedrooms, {4} bathrooms, year built: {5}'.format( row['price'], 
-                           row['date'], 
-                           row['sqft_living'],
-                           row['bedrooms'],
-                           row['bathrooms'],
-                           row['yr_built'] ) ).add_to( marker_cluster )
-
-
-    with c1:
-        folium_static( density_map )
-
-
-    # Region Price Map
-    c2.header( 'Price Density' )
-
-    df = data[['price', 'zipcode']].groupby( 'zipcode' ).mean().reset_index()
-    df.columns = ['ZIP', 'PRICE']
-
-    geofile = geofile[geofile['ZIP'].isin( df['ZIP'].tolist() )]
-
-    region_price_map = folium.Map( location=[data['lat'].mean(), 
-                                   data['long'].mean() ],
-                                   default_zoom_start=15 ) 
-
-
-    region_price_map.choropleth( data = df,
-                                 geo_data = geofile,
-                                 columns=['ZIP', 'PRICE'],
-                                 key_on='feature.properties.ZIP',
-                                 fill_color='YlOrRd',
-                                 fill_opacity = 0.7,
-                                 line_opacity = 0.2,
-                                 legend_name='AVG PRICE' )
-
-    with c2:
-        folium_static( region_price_map )
-
-
-    return None
 
 
 def set_commercial( data ):
@@ -230,6 +244,8 @@ def set_commercial( data ):
     fig = px.histogram( df, x='price', nbins=50 )
     st.plotly_chart( fig, use_container_width=True )
 
+    st.markdown('''---''')
+    st.sidebar.markdown('''---''')
     return None
 
 
@@ -296,9 +312,11 @@ if __name__ == "__main__":
     # transform data
     data = set_attributes( data )
 
-    data_overview( data )
+    heading()
 
-    region_overview( data, geofile )
+    region_overview( data, geofile )    
+
+    data_overview( data )
 
     set_commercial( data )
     
